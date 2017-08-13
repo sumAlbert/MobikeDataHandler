@@ -8,10 +8,10 @@ public class PutuoHeatMap {
     public static void main(String[] args){
         MysqlHandler mysqlHandler=new MysqlHandler();
         Connection connection=mysqlHandler.getConnection();
-        String sql="SELECT * FROM ofo.putuo_mobike_address2 as t1,ofo.putuo_mobike_address2 as t2 where t1.bikeIds=t2.bikeIds and t1.save_time='2017-08-13 11:00:00' and t2.save_time='2017-08-13 08:00:00' and t1.distX=t2.distX and t1.distY=t2.distY;";
-//        String sql="SELECT * FROM ofo.putuo_mobike_address2 where save_time = '2017-08-13 11:00:00'";
-        File file=new File("C:\\Users\\98267\\IdeaProjects\\spider2\\src\\putuo_heatmap2_notmove_170813_0800_1100.txt");
-//        File file=new File("C:\\Users\\98267\\IdeaProjects\\spider2\\src\\putuo_heatmap2_1708131100.txt");
+//        String sql="SELECT * FROM ofo.putuo_mobike_address2 as t1,ofo.putuo_mobike_address2 as t2 where t1.bikeIds=t2.bikeIds and t1.save_time='2017-08-13 11:00:00' and t2.save_time='2017-08-13 08:00:00' and t1.distX=t2.distX and t1.distY=t2.distY;";
+        String sql="SELECT * FROM ofo.putuo_mobike_address2 where save_time = '2017-08-13 12:00:00'";
+//        File file=new File("C:\\Users\\98267\\IdeaProjects\\spider2\\src\\putuo_heatmap2_notmove_170813_0800_1100.txt");
+        File file=new File("C:\\Users\\98267\\IdeaProjects\\spider2\\src\\putuo_heatmap2_1708131200.txt");
         try {
             PrintStream printStream=new PrintStream(new FileOutputStream(file));
             Statement statement=connection.createStatement();
