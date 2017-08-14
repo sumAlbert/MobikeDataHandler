@@ -52,7 +52,7 @@ public class PutuoBlockMap {
         result+=key_char;
         return result;
     }
-    public static String latHash(String lat){
+    private static String latHash(String lat){
         String result="";
         String key_str=lat.substring(3,5);
         int key_int=Integer.parseInt(key_str)+26;
