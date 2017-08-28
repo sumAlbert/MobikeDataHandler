@@ -16,13 +16,13 @@ import java.util.logging.Logger;
 //对ofo到普陀区地铁站的距离进行整理
 public class PutuoSubwayDistance {
     private static String[] subwayEn;
-    private static String[] subwayCn;
     private static int least;
     private static int info_all1;
     private static int info_all2;
     private static int info_all3;
     private static int info_all4;
     private static int info_all5;
+    private static ArrayList<Integer> arrayList_distance=new ArrayList<>();
     private static HashMap<String,Integer> info1=new HashMap<>();
     private static HashMap<String,Integer> info2=new HashMap<>();
     private static HashMap<String,Integer> info3=new HashMap<>();
@@ -142,11 +142,11 @@ public class PutuoSubwayDistance {
         info_all4=subwayHelper.getInfo_all4();
         info_all5=subwayHelper.getInfo_all5();
         subwayEn=subwayHelper.getSubwayEn();
-        subwayCn=subwayHelper.getSubwayCn();
     }
     public static void main(String[] args){
         init();
         try{
+            int count=1;
             Logger logger=Logger.getLogger(Thread.currentThread().getStackTrace()[0].getClassName());
             Driver driver=new com.mysql.jdbc.Driver();
             DriverManager.registerDriver(driver);
@@ -156,12 +156,19 @@ public class PutuoSubwayDistance {
             ResultSet resultSet=statement.executeQuery(sql);
             while (resultSet.next()){
                 least=6;
+                int least_distance=12000;
                 for(int i=0;i<subwayEn.length;i++){
                     String subInfo=resultSet.getString(subwayEn[i]);
-                    logger.info(String.valueOf(i));
+                    int distance=Integer.parseInt(subInfo);
+                    if(distance<least_distance){
+                        least_distance=distance;
+                    }
                     getDistance(i,subInfo);
                 }
+                arrayList_distance.add(least_distance);
                 getTotal();
+                logger.info(String.valueOf(count));
+                count++;
             }
             File file=new File("C:\\Users\\98267\\IdeaProjects\\spider2\\src\\Data\\subway\\subway_distance.txt");
             FileOutputStream fileOutputStream=new FileOutputStream(file);
@@ -211,6 +218,19 @@ public class PutuoSubwayDistance {
                     printStream.append(info5.get(subwayEn[i]).toString()+'\n');
                 }
             }
+            int max=0;
+            int sum=0;
+            for(int i=0;i<arrayList_distance.size();i++){
+                int distance_now=arrayList_distance.get(i);
+                sum=sum+distance_now;
+                if(distance_now>max){
+                    max=distance_now;
+                }
+            }
+            printStream.append("max:"+String.valueOf(max)+'\n');
+            printStream.append("sum:"+String.valueOf(sum)+'\n');
+            printStream.append("avg_int"+String.valueOf(sum/arrayList_distance.size())+'\n');
+            printStream.append("avg_double"+String.valueOf(((double) sum)/ arrayList_distance.size())+'\n');
             System.out.println("ok");
         }catch (Exception exception){
             exception.printStackTrace();
