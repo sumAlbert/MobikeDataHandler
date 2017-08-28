@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.Statement;
-
+/*把普陀区地铁的经纬度存储到mysql里面*/
 public class PutuoSubwayAddress {
     public static void main(String[] args){
         try{
