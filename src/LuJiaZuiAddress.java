@@ -13,18 +13,19 @@ public class LuJiaZuiAddress {
             Connection connection=DriverManager.getConnection("jdbc:mysql://localhost:3306/ofo?useUnicode=true&characterEncoding=utf8&useSSL=true","root","123aaaaaa");
             Statement statement=connection.createStatement();
             String sql_fix="insert into lujiazui_address (lng,lat) values (";
-            Double start_lng=121.455;
+            Double start_lng=121.451;
             Double start_lat=31.224;
             Double stop_lng=121.532;
             Double stop_lat=31.245;
             Double inteval=0.001;
-            for(int i=0;i<82;i++){
+            for(int i=0;i<87;i++){
                 Double lng=start_lng+inteval*i;
-                for(int j=0;j<27;j++){
+                for(int j=0;j<33;j++){
                     Double lat=start_lat+inteval*j;
                     String lng_str=(String.valueOf(lng)+"00000").substring(0,7);
                     String lat_str=(String.valueOf(lat)+"00000").substring(0,6);
                     String sql=sql_fix+lng_str+","+lat_str+")";
+                    System.out.println(sql);
                     statement.execute(sql);
                 }
             }
